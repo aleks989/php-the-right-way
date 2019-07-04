@@ -69,7 +69,39 @@ factory-a vas možete lišiti dosta problema.
 Pri razvoju web aplikacija, često ima smisla konceptualno i arhitekturalno omogućiti korišćenje samo jedne
 instance određene klase. Singleton patern omogućava upravo tako nešto.
 
-**TODO: NEED NEW SINGLETON CODE EXAMPLE**
+{% highlight php %}
+<?php
+class User 
+{
+  private static $instance = null;
+  private $name = null;
+
+  private function __construct($name)
+  {
+  	$this->name = $name;
+  }
+
+  public static function getInstance($name)
+  {
+    if(!self::$instance)
+    {
+      self::$instance = new User($name);
+    }
+    return self::$instance;
+  }
+
+  public function getName() 
+  {
+  	return $this->name;
+  }
+}
+
+$alex = User::getInstance('Aleksandar');
+$petar = User::getInstance('Petar');
+echo "Pozdrav ".$petar->getName(); 
+// ispisuje "Aleksandar"
+
+{% endhighlight %}
 
 Ovaj kôd implementira singleton patern koristeći [*statičku* promenljivu](http://php.net/language.variables.scope#language.variables.scope.static)
 i statički `getInstance()` metod. Obratite pažnju i na sledeće:
